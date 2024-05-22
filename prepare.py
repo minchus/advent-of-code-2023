@@ -4,6 +4,7 @@ import argparse
 import requests
 
 from pathlib import Path
+from os.path import join
 
 
 session = requests.Session()
@@ -21,10 +22,13 @@ parser = argparse.ArgumentParser("day.py")
 parser.add_argument("day", help="AOC day to prepare", type=int)
 args = parser.parse_args()
 
-Path(f'day{args.day:02}').mkdir(exist_ok=True)
+day_number = args.day
+new_dir = f'day{day_number:02}'
+Path(new_dir).mkdir(exist_ok=True)
+Path(join(new_dir, 'main.py')).touch()
 
 lines = get_input_data(args.day)
-with open(f'day{args.day:02}/input.txt', 'w') as f:
+with open(join(new_dir, 'input.txt'), 'w') as f:
     for line in lines:
         f.write(f"{line}\n")
 

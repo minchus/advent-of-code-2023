@@ -12,10 +12,10 @@ with open('cookie.txt') as f:
     cookie = f.read().strip()
 requests.utils.add_dict_to_cookiejar(session.cookies, {"session": cookie})
 
-def get_input_data(day: int) -> list[str]:
+def get_input_data(day: int) -> str:
   url = f'https://adventofcode.com/2023/day/{day}/input'
   text = session.get(url).text
-  return [line.strip() for line in text.split("\n") if line.strip() != '']
+  return text
 
 
 parser = argparse.ArgumentParser("day.py")
@@ -27,8 +27,7 @@ new_dir = f'day{day_number:02}'
 Path(new_dir).mkdir(exist_ok=True)
 Path(join(new_dir, 'main.py')).touch()
 
-lines = get_input_data(args.day)
+text = get_input_data(args.day)
 with open(join(new_dir, 'input.txt'), 'w') as f:
-    for line in lines:
-        f.write(f"{line}\n")
+        f.write(text)
 
